@@ -5,5 +5,19 @@
 
 **必看 Java.md**
 
-## 注意事项
+# 必看
+
+要添加新功能或者修复bug，现在要用分支。每一个分支维护一个主题，直到这个主题做完再合并
+
+分支名称格式
+[类型]/[具体需求]
+
+例如
+bugfix/修复首页无法滚动的问题
+需求添加/个人页面
+更新/更新到Java 21
+
+参见 [Github 工作流](https://docs.github.com/zh/get-started/using-github/github-flow)
+
+# 注意事项
 * 为了方便开发，后端统一使用 UTC+8，前端按需处理
