@@ -25,11 +25,18 @@ public class SomeClass
 {
     public static void main(String[] args)
     {
-        if(condition) 
-        {
+        if(condition) {
             System.out.println("Hello World");
         }
     }
+}
+```
+- 使用k&r格式
+```java
+if{
+
+}else{
+
 }
 ```
 - 不要嵌套过多
@@ -37,12 +44,10 @@ public class SomeClass
 // 错误示范
 public static void main(String[] args) 
 {
-    if (condition) 
-    {
+    if (condition) {
         doTask();
         doTask2();
-        if(condition2)
-        {
+        if(condition2){
             doTask3();
         }
     }
@@ -50,14 +55,12 @@ public static void main(String[] args)
 // 正确示范
 public static void main(String[] args) 
 {
-    if (!condition) 
-    {
+    if (!condition) {
         return;
     }
     doTask();
     doTask2();
-    if(!condition2)
-    {
+    if(!condition2){
         return;
     }
     doTask3();
