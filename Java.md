@@ -33,7 +33,7 @@ public class SomeClass
 ```
 - 使用k&r格式
 ```java
-if{
+if () {
 
 } else {
 
