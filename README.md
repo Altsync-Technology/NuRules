@@ -12,12 +12,30 @@
 分支名称格式
 [类型]/[具体需求]
 
+```
 例如
 bugfix/修复首页无法滚动的问题
-需求添加/个人页面
-更新/更新到Java 21
+feature/个人页面
+update/更新到Java 21
+```
+
+当分支工作完毕，你需要归档分支。用 tag 来归档分支。
+```bash
+# 如果你的分支在本地
+git tag archive/功能实现/历史记录 功能实现/历史记录
+
+# 如果分支在远程，那么指定的分支前面还需要加 remote/
+git tag archive/功能实现/历史记录 remotes/origin/功能实现/历史记录
+
+# 不要忘记推送标签和删除分支
+git push --tags
+git push origin --delete 功能实现/历史记录
+git branch -d 功能实现/历史记录
+```
 
 参见 [Github 工作流](https://docs.github.com/zh/get-started/using-github/github-flow)
 
 # 注意事项
 * 为了方便开发，后端统一使用 UTC+8，前端按需处理
+
+
