@@ -19,14 +19,11 @@
 ## 语法与逻辑
 - 局部变量类型尽量使用 `var` 
 - 使用四格空格缩进
-- 大括号另起一行 (非硬性. 常用自动格式化功能格式化代码！)
+
 ```java
-public class SomeClass
-{
-    public static void main(String[] args)
-    {
-        if(condition) 
-        {
+public class SomeClass{
+    public static void main(String[] args){
+        if(condition) {
             System.out.println("Hello World");
         }
     }
@@ -35,29 +32,23 @@ public class SomeClass
 - 不要嵌套过多
 ```java
 // 错误示范
-public static void main(String[] args) 
-{
-    if (condition) 
-    {
+public static void main(String[] args) {
+    if (condition) {
         doTask();
         doTask2();
-        if(condition2)
-        {
+        if(condition2){
             doTask3();
         }
     }
 }
 // 正确示范
-public static void main(String[] args) 
-{
-    if (!condition) 
-    {
+public static void main(String[] args) {
+    if (!condition) {
         return;
     }
     doTask();
     doTask2();
-    if(!condition2)
-    {
+    if(!condition2){
         return;
     }
     doTask3();
@@ -87,8 +78,7 @@ com.example.service
 ```java
 // 实际上，from 函数已经在接口  中定义了
 @Data
-class UserModel
-{
+class UserModel {
      String name;
      Integer age;
      String realName;
@@ -96,13 +86,11 @@ class UserModel
 }
 
 @Data
-class UserInfoRes
-{
+class UserInfoRes{
     String name;
     Integer age;
     String tokenInfo;
-    public static UserInfoRes <T>from(T copyFrom)
-    {
+    public static UserInfoRes <T>from(T copyFrom) {
         var result = new UserInfoRes();
         BeanUtils.copyProperties(copyFrom, result);
         result.setTokenInfo(Utils.tokenToInfo(copyFrom.getToken()));
@@ -126,8 +114,7 @@ class UserInfoRes
 新的代码应避免 N + 1 查询。
 ```java
 // 反例
-public List<ShitInfo> grabShitInfos(List<Integer> shitId) 
-{
+public List<ShitInfo> grabShitInfos(List<Integer> shitId) {
     var result = new List<ShitInfo>();
 
     // 1次查询
@@ -167,8 +154,7 @@ public List<ShitInfo> grabShitInfos(List<Integer> shitId)
 @RestController
 @RequestMapping("api/front/article")
 @Api(tags = "文章")
-public class ArticleController
-{
+public class ArticleController{
     @Autowired
     private ArticleService articleService;
 
@@ -177,8 +163,7 @@ public class ArticleController
 
     @ApiOperation("文章分类列表")
     @GetMapping("/category/list")
-    public CommonResult<List<ArticleCategoryResponse>> getCategoryList(@ApiParam("分类组 id") Integer id)
-    {
+    public CommonResult<List<ArticleCategoryResponse>> getCategoryList(@ApiParam("分类组 id") Integer id) {
         return CommonResult.success(articleCategoryService.getFrontList(id));
     }
 
