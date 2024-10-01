@@ -86,7 +86,7 @@ class UserModel {
 }
 
 @Data
-class UserInfoRes{
+class UserInfoRes {
     String name;
     Integer age;
     String tokenInfo;
