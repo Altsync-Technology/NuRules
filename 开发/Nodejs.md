@@ -1,4 +1,6 @@
 # Nodejs
+> 查看此文档前，请先查看 [通用开发指南](../通用开发指南.md)
+
 允许使用 Intellij Webstorm / Nvim / VSCODE 战斗进化 开发。
 
 公司主要使用 Intellij Webstorm。

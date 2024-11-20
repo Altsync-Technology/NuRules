@@ -1,4 +1,6 @@
 # Flutter
+> 查看此文档前，请先查看 [通用开发指南](../通用开发指南.md)
+
 公司主要使用 Android Studio。
 
 必须使用 fvm 进行 Flutter 版本管理。[简易教程](https://medium.com/@ahmedawwan/flutter-version-management-a-guide-to-using-fvm-dbe1d269f565)
@@ -34,13 +36,7 @@
 ## 排版
 * 页面中的元素不应该太多或者太杂，以传达信息易于接受和理解优先
 
-# 环境要求
-* Flutter: 3.22.0
-* Dart: 3.40
-* Android Studio
-
 # 逻辑
-* 大部分与 java 一致
 * 选择适合项目规模的状态管理方案（如Provider、Bloc、Riverpod等）
 * 避免在Widget树中传递大量参数，使用依赖注入或InheritedWidget
 ```Dart
