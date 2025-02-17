@@ -65,6 +65,115 @@ Container(
 )
 ```
 
+### 通过  Flexible 组件 在 Column 或 Row 中 按比例分配组件尺寸
+
+在 Row 中，如果需要创建三个子组件按不同的比例分配空间：
+
+```dart
+Row(
+  children: [
+    Flexible(
+      flex: 1, //占比 1
+      child: Container(
+        color: Colors.red,
+      ),
+    ),
+    Flexible(
+      flex: 2, //占比 2
+      child: Container(
+        color: Colors.green,
+      ),
+    ),
+    Flexible(
+      flex: 1, //占比 1
+      child: Container(
+        color: Colors.blue,
+      ),
+    ),
+  ],
+);
+```
+
+### （建议使用 Flexible）通过 Expanded 组件 在 Column 或 Row 中 按比例分配组件尺寸
+
+Expanded 在确定高度的 Column 和 确定宽度的 Row 中 类似于 Flexible，它的默认 flex 参数的值为 1
+在滚动视图中使用这种写法需要确保组件在滚动方向上确定组件的长度（建议配合 ScreenUtil 确定长度），否则会爆出尺寸未定义的错误
+如果在一个 Row 中创建三个等分宽度，高度为10的黑色矩形，应该这么写 
+
+```dart
+...
+Row(                          
+  children: [                 
+    Expanded(                 
+        child: Container(     
+          height: 10.w,       
+          color: Colors.black,
+        )),                    
+    Expanded(                 
+        child: Container(     
+          height: 10.w,       
+          color: Colors.black,
+        )),                    
+    Expanded(                 
+        child: Container(     
+          height: 10.w,       
+          color: Colors.black,
+        )),                    
+  ],                          
+),
+```
+
+当在滚动视图中创建一个需要创建三个分别占 Column 高度比例为 2: 1: 1 的红绿蓝三色矩形的 Column 时应该这么写
+
+```dart
+SizedBox(                       
+  height: 400,  //确定高度，防止在滚动视图中组件无法获取尺寸信息
+  child: Column(                
+    children: [                 
+      Expanded(                 
+          flex: 2,              
+          child: Container(     
+            color: Colors.red,  
+          )),                    
+      Expanded(                 
+          flex: 1,              
+          child: Container(     
+            color: Colors.green,
+          )),                    
+      Expanded(                 
+          flex: 1,              
+          child: Container(     
+            color: Colors.blue, 
+          )),                    
+    ],                          
+  ),                             
+),
+```
+
+### 使用 LayoutBuilder 进行自适应
+
+LayoutBuilder 可以根据父组件的实际尺寸动态调整子组件的大小。这对于一些更加复杂的布局，或需要动态适应父容器尺寸的场景非常有用。
+
+例如，根据父容器的宽度来生成一行四个动态尺寸的正方形组件：
+
+```dart
+LayoutBuilder(
+  builder: (context, constraints) {
+    double screenWidth = constraints.maxWidth;
+    return Row(
+      children: List.generate(4, (index) {
+        return Container(
+          color: Colors.white,
+          width: screenWidth / 4,
+          height: screenWidth / 4,
+        );
+      }).toList(),
+    );
+  },
+);
+
+```
+
 ### (不推荐) 通过 MediaQuery 获取屏幕信息进行自适应
 
 在一些情况下可能不得不需要使用 MediaQuery. 如果非必要, 请根据 ScreenUtil 的写法来实现自适应.
