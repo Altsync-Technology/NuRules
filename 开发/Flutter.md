@@ -41,7 +41,33 @@
 * 类似堆积木，将页面划分为多个组件，合理组织页面结构，按照布局**明确**分组
 
 ## 自适应
-### 通过 MediaQuery获取屏幕信息进行自适应
+
+### 通过 ScreenUtil 包进行自适应
+
+[官方文档](https://github.com/OpenFlutter/flutter_screenutil/blob/master/README_CN.md)
+项目通过 ScreenUtil 来保证在各个设备上保持相近的显示效果
+来品购 APP 的设计尺寸是 375*800 (单位: dp)，项目已经根据设计尺寸初始化了 ScreenUtil
+
+```dart
+...
+child: ScreenUtilInit(
+    designSize: const Size(375, 800),
+...
+```
+
+所以在创建一个屏幕宽度的组件时，例如一个高度为1的黑色长条，需要这么写
+
+```dart
+Container(
+	width: 375.w,
+	height: 1,
+	color: Colors.black
+)
+```
+
+### (不推荐) 通过 MediaQuery 获取屏幕信息进行自适应
+
+在一些情况下可能不得不需要使用 MediaQuery. 如果非必要, 请根据 ScreenUtil 的写法来实现自适应.
 
 通过MediaQuery.of(context).size 获取屏幕尺寸信息，例如
 
@@ -66,7 +92,7 @@ Row(
 ```
 
 ```dart
-//正确实现（除非必要，请使用下面的 ScreenUtil 包）
+//正确实现
 get screenWidth => MediaQuery.of(context).size.width; //获取屏幕宽度
 
 Row(
@@ -79,28 +105,6 @@ Row(
 	}).toList()
 )
 ```
-## 通过 ScreenUtil 包进行自适应
-
-[官方文档](https://github.com/OpenFlutter/flutter_screenutil/blob/master/README_CN.md)
-项目通过 ScreenUtil 来保证在各个设备上保持相近的显示效果
-我们都知道，来品购 APP 的设计尺寸是 375*800 (单位: dp)，并且当前项目已经根据设计尺寸进行设置了
-
-```dart
-...
-child: ScreenUtilInit(
-    designSize: const Size(375, 800),
-...
-```
-
-所以当我们需要创建一个屏幕宽度的组件时，例如一个高度为1的黑色长条，我们可以这样
-
-```dart
-Container(
-	width: 375.w,
-	height: 1,
-	color: Colors.black
-)
-```
 
 ## 安全区
 
@@ -109,6 +113,9 @@ get screenPadding => MediaQuery.of(context).padding; //获取屏幕安全区边�
 get cameraHeight => MediaQuery.of(context).padding.top;
 
 或者使用 SafeArea() 组件，使用方式参照 flutter 文档
+
+
+
 
 # 逻辑
 * 选择适合项目规模的状态管理方案（如Provider、Bloc、Riverpod等）
