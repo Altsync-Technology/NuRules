@@ -54,25 +54,25 @@
 
 App 内常用或者封装后的组件在 compoment 文件夹里，以下是一些 App 内常用的组件的说明，具体使用方法请参考项目文件
 
-文字 AppWidget.text()
+* 文字 AppWidget.text()
 用于创建文本 Widget，使用方法与 Text() 组件基本一致，但是需要传入 style 来保证样式统一
 
-输入框 AppInputWidget()
+* 输入框 AppInputWidget()
 使用方法与 TextField() 一致，但是固定高度
 
-搜索框 AppWidget.buildSearchBar()
+* 搜索框 AppWidget.buildSearchBar()
 用于创建搜索框
 
-行与列空隙 AppWidget.blankWidth() 和 AppWidget.blankHeight()
+* 行与列空隙 AppWidget.blankWidth() 和 AppWidget.blankHeight()
 用于在列表视图中创建空隙，非必要请使用边距来实现
 
-网络图片 AppWidget.getNetworkImage()
+* 网络图片 AppWidget.getNetworkImage()
 用于获取网络图片，自带加载动画和 errorBuilder，以及支持直接进入图片画廊
 
-分割线 AppWidget.buildDivider()
+* 分割线 AppWidget.buildDivider()
 用于创建分割线组件
 
-更多组件请参考 compoment 文件夹下的文件
+* 更多组件请参考 compoment 文件夹下的文件
 
 ### 样式
 
@@ -80,10 +80,9 @@ App 内的常用样式大部分都规定在了 common_styles.dart 文件里
 
 #### 边距
 
-项目在 common_styles.dart 文件内的 AppMargin 和 AppPadding 类里规定了一些常用的内外边距参数
-例如 App 内页面通用的页面水平边距为 AppMargin.horizontalPageMargin
+项目在 common_styles.dart 文件内的 AppMargin 和 AppPadding 类里规定了一些常用的内外边距参数，例如 App 内页面通用的页面水平边距为 AppMargin.horizontalPageMargin
 
-当你需要创建一个滚动视图的页面时，绝大部分情况下，为了保证项目内每个页面视图和页面内组件外边距统一，需要这么写
+* 当你需要创建一个滚动视图的页面时，绝大部分情况下，为了保证项目内每个页面视图和页面内组件外边距统一，需要这么写
 
 ```dart
 ListView(
@@ -106,7 +105,7 @@ ListView(
 )
 ```
 
-在一些比较罕见的情况下，如果你不得不需要获取这些参数的数值，通过  AppPaddingValue 来获取
+* 在一些比较罕见的情况下，如果你不得不需要获取这些参数的数值，那么可以通过 AppPaddingValue 或 AppMarginValue 来获取
 例如我要获取 AppMargin.horizontalPageMargin 或 AppPadding.allPadding01 的数值
 那么就可以用 AppMarginValue.pageMargin 或 AppPaddingValue.padding01 来获取
 
