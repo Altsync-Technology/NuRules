@@ -54,64 +54,108 @@
 
 App 内常用或者封装后的组件在 compoment 文件夹里，以下是一些 App 内常用的组件的说明，具体使用方法请参考项目文件
 
-* 文字 AppWidget.text()
+* 文字 AppWidget.text()  
 用于创建文本 Widget，使用方法与 Text() 组件基本一致，但是需要传入 style 来保证样式统一
 
-* 输入框 AppInputWidget()
+* 输入框 AppInputWidget()  
 使用方法与 TextField() 一致，但是固定高度
 
-* 搜索框 AppWidget.buildSearchBar()
+* 搜索框 AppWidget.buildSearchBar()  
 用于创建搜索框
 
-* 行与列空隙 AppWidget.blankWidth() 和 AppWidget.blankHeight()
+* 行与列空隙 AppWidget.blankWidth() 和 AppWidget.blankHeight()  
 用于在列表视图中创建空隙，非必要请使用边距来实现
 
-* 网络图片 AppWidget.getNetworkImage()
+* 网络图片 AppWidget.getNetworkImage()  
 用于获取网络图片，自带加载动画和 errorBuilder，以及支持直接进入图片画廊
 
-* 分割线 AppWidget.buildDivider()
+* 分割线 AppWidget.buildDivider()  
 用于创建分割线组件
 
 * 更多组件请参考 compoment 文件夹下的文件
 
 ### 样式
 
-App 内的常用样式大部分都规定在了 common_styles.dart 文件里
+App 内的常用样式主要定义在 `common_styles.dart` 文件中。
 
-#### 边距
+### 边距规范  
 
-项目在 common_styles.dart 文件内的 AppMargin 和 AppPadding 类里规定了一些常用的内外边距参数，例如 App 内页面通用的页面水平边距为 AppMargin.horizontalPageMargin
+在 `common_styles.dart` 文件中，`AppMargin` 和 `AppPadding` 类定义了一系列常用的边距参数。  
 
-* 当你需要创建一个滚动视图的页面时，绝大部分情况下，为了保证项目内每个页面视图和页面内组件外边距统一，需要这么写
+#### 命名规则  
+除了通用的 **页面水平边距** `pageMargin` 之外，其余边距参数的命名遵循以下格式：  
+```
+[AppMargin / AppPadding] + . + [all / horizontal / vertical / top / bottom] + [Margin / Padding] + [01 ~ 07]
+
+//使用例
+//水平外边距04
+AppMargin.horizontalMargin04
+
+//仅底部内边距02
+AppPadding.bottomPadding02
+```
+
+
+- `01` 代表最小边距，`07` 代表最大边距，数字越大，边距越大。  
+- **页面内通用的水平边距** 为：`AppMargin.horizontalPageMargin`。
+
+####  使用规范
+> **规范使用示例：**  
+> 在创建滚动视图页面时，绝大部分情况下，应确保页面视图与组件的外边距统一：
 
 ```dart
 ListView(
-  padding: AppMargin.horizontalPageMargin, //在最外层组件为内层组件添加统一的页面内组件外边距
-  children: List.generate(20, (index) {                 
-    return Container(                                   
-      height: 80.w
-      //margin: EdgeInsets.only(         //错误写法，给每个组件都设置单独一模一样的外边距来统一外边距
-      //      left: AppMarginValue.pageMargin,
-      //      right: AppMargin.pageMargin,
-      //      bottom: AppMarginValue.margin03
-      // )
-      margin: AppMargin.bottomMargin03,      //只需要为每个组件添加单独的底部外边距
-      decoration: BoxDecoration(                        
-          color: Colors.white,                          
-        borderRadius: AppBorderRadius.borderRadiusMedium
-      ),                                                 
-    );                                                   
-  }),                                                    
+  padding: AppMargin.horizontalPageMargin, // 在最外层组件设置统一的页面内边距
+  children: List.generate(20, (index) {
+    return Container(
+      height: 80.w,
+      margin: AppMargin.bottomMargin03, // 仅设置底部外边距，保证间距统一
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: AppBorderRadius.borderRadiusMedium,
+      ),
+    );
+  }),
 )
 ```
 
-* 在一些比较罕见的情况下，如果你不得不需要获取这些参数的数值，那么可以通过 AppPaddingValue 或 AppMarginValue 来获取
-例如我要获取 AppMargin.horizontalPageMargin 或 AppPadding.allPadding01 的数值
-那么就可以用 AppMarginValue.pageMargin 或 AppPaddingValue.padding01 来获取
+在少数情况下，若需要获取边距的具体数值，可通过 `AppMarginValue` 或 `AppPaddingValue` 获取，例如：  
+* 通过 `AppMarginValue.pageMargin` 来获取 `AppMargin.horizontalPageMargin` 的具体数值
+* 通过 `AppPaddingValue.padding01` 来获取 `AppPadding.allPadding01` 的具体数值
+
+> **错误示例：**  
+> 不应该为每个组件单独设置相同的 `margin`，这样会导致维护困难：
+
+```dart
+Container(
+  margin: EdgeInsets.only(
+    left: AppMarginValue.pageMargin,
+    right: AppMarginValue.pageMargin,
+    bottom: AppMarginValue.margin03,
+  ),
+)
+
+```
 
 ### 圆角
 
-圆角样式规定在 AppBorderRadius 和 AppRadius 类里，使用方法和边距的样式一致
+圆角样式定义在 `AppBorderRadius` 和 `AppRadius` 类中，使用方式与边距样式一致。
+#### 命名规则  
+```dart
+[AppBorderRadius / AppRadius] + . + [borderRadius / radius] + [01 ~ 05]
+```
+- **最常用**的圆角样式为 `AppBorderRadius.borderRadius03`  
+- 其中，要使用 `AppBorderRadius` 还是 `AppRadius` 需要根据组件的需要的参数类型决定  
+- 为了保证圆角样式统一，无论是 `AppBorderRadius` 还是 `AppRadius` ，如果末尾数字一致，那么 `AppBorderRadius` 和 `AppRadius` 的圆角大小也一致  
+
+同样地，需要获取圆角样式的具体数值大小时，通过 `AppBorderRadiusValue` 获取
+```dart
+// 获取 AppBorderRadius.borderRadius03 的数值
+AppBorderRadiusValue.borderRadius03
+
+// 获取 AppRadius.radius05 的数值
+AppBorderRadiusValue.borderRadius05
+```
 
 ## 自适应
 
