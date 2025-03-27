@@ -71,8 +71,8 @@ App 内常用或者封装后的组件在 compoment 文件夹里，以下是一�
 * 弹窗 `Util.showAlternativeDialog` 和 `Util.showMessageDialog`
   用于显示弹窗
 * 列表选择器 `showListPicker`
-  用于显列表示选择弹窗
-  ...
+  用于显列表示选择弹窗  
+  ...  
 * 更多组件请参考 `compoment` 文件夹下的文件
 
 ### 样式
