@@ -54,23 +54,23 @@
 
 App 内常用或者封装后的组件在 compoment 文件夹里，以下是一些 App 内常用的组件的说明，具体使用方法请参考项目文件
 
-* 文字 `AppWidget.text()`
+* 文字 `AppWidget.text()`  
   用于创建文本 Widget，使用方法与 Text() 组件基本一致，但是需要传入 style 来保证样式统一
-* 输入框 `AppInputWidget()`
+* 输入框 `AppInputWidget()`  
   使用方法与 TextField() 一致，但是固定高度
-* 搜索框 `AppWidget.buildSearchBar()`
+* 搜索框 `AppWidget.buildSearchBar()`  
   用于创建搜索框
-* 行与列空隙 `AppWidget.blankWidth()` 和 `AppWidget.blankHeight()`
+* 行与列空隙 `AppWidget.blankWidth()` 和 `AppWidget.blankHeight()`  
   用于在列表视图中创建空隙，非必要请使用边距来实现
-* 网络图片 `AppWidget.getNetworkImage()`
+* 网络图片 `AppWidget.getNetworkImage()`  
   用于获取网络图片，自带加载动画和 errorBuilder，以及支持直接进入图片画廊
-* 分割线 `AppWidget.buildDivider()`
+* 分割线 `AppWidget.buildDivider()`  
   用于创建分割线组件
-* Toast 轻提示 `Util.showToast`
+* Toast 轻提示 `Util.showToast`  
   用于显示 Toast 提示
-* 弹窗 `Util.showAlternativeDialog` 和 `Util.showMessageDialog`
+* 弹窗 `Util.showAlternativeDialog` 和 `Util.showMessageDialog`  
   用于显示弹窗
-* 列表选择器 `showListPicker`
+* 列表选择器 `showListPicker`  
   用于显列表示选择弹窗  
   ...  
 * 更多组件请参考 `compoment` 文件夹下的文件
