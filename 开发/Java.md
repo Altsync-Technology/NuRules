@@ -28,24 +28,14 @@
 - 使用四格空格缩进
 
 ```java
-<<<<<<< HEAD
-public class SomeClass{
-    public static void main(String[] args){
-=======
-public class SomeClass
-{
-    public static void main(String[] args)
-    {
->>>>>>> 62e06321ae985da768a83380e459062b30bc97fc
+public class SomeClass {
+    public static void main(String[] args) {
         if(condition) {
             System.out.println("Hello World");
         }
     }
 }
 ```
-<<<<<<< HEAD
-
-=======
 - 使用k&r格式
 ```java
 if () {
@@ -54,17 +44,11 @@ if () {
 
 }
 ```
->>>>>>> 62e06321ae985da768a83380e459062b30bc97fc
 - 不要嵌套过多
 
 ```java
-<<<<<<< HEAD
-// 错误示范public static void main(String[] args) {
-=======
 // 错误示范
-public static void main(String[] args) 
-{
->>>>>>> 62e06321ae985da768a83380e459062b30bc97fc
+public static void main(String[] args) {
     if (condition) {
         doTask();
         doTask2();
@@ -73,13 +57,8 @@ public static void main(String[] args)
         }
     }
 }
-<<<<<<< HEAD
-// 正确示范public static void main(String[] args) {
-=======
 // 正确示范
-public static void main(String[] args) 
-{
->>>>>>> 62e06321ae985da768a83380e459062b30bc97fc
+public static void main(String[] args) {
     if (!condition) {
         return;
     }
@@ -256,7 +235,6 @@ public class ArticleController{
 
 ### **控制器**
 
-<<<<<<< HEAD
 - @ResponseBody: 告诉 Spring 将函数的返回值直接写入 HTTP 响应体（response body），而不是寻找视图（view）
 - @RestController: 组合注解，等同于 @Controller 和 @ResponseBody
 - @RequestMapping: 映射 Web 请求，可用于类或函数级别 （大部分可用 @MethodMapping 简化）
@@ -289,21 +267,3 @@ public class ArticleController{
 13. `@Future` 时期、时间 必须是一个未来的时间或日期
 14. `@Email` 字符串 必须是一个邮箱格式
 15. `@Pattern` 字符串、字符 正则匹配字符串
-=======
-#### 数据验证
-1. `@NotNull`    注解	作用类型	解释	任何类型	属性不能为 `null`
-2. `@NotEmpty`	集合	集合不能为 `null`，且 `size` 大于 `0`
-3. `@NotBlank`	只能作用在 `String` 上，不能为 `null`，而且调用 `trim()` 后，长度必须大于 `0`
-4. `@AssertTrue`	`Boolean、boolean`	布尔属性必须是 `true`
-5. `@Min`	数字类型（原子和包装）	限定数字的最小值（整型）
-6. `@Max`	同 `@Min`	限定数字的最大值（整型）
-7. `@DecimalMin`	同 `@Min`	限定数字的最小值（字符串，可以是小数）
-8. `@DecimalMax`	同 `@Min`	限定数字的最大值（字符串，可以是小数）
-9. `@Range`	数字类型（原子和包装）	限定数字范围（长整型）
-10. `@Length`	字符串	限定字符串长度
-11. `@Size`	集合	限定集合大小
-12. `@Past`	时间、日期	必须是一个过去的时间或日期
-13. `@Future`	时期、时间	必须是一个未来的时间或日期
-14. `@Email`	字符串	必须是一个邮箱格式
-15. `@Pattern`	字符串、字符	正则匹配字符串
->>>>>>> 62e06321ae985da768a83380e459062b30bc97fc
