@@ -19,25 +19,30 @@
 
 ## 代码结构
 
-* 在 pubspec.yaml 添加要使用的库和文件
-* 在 pages 文件夹添加页面文件
-* 在 assets 文件夹添加本地资源
-* 在 network 添加网络和状态相关的文件
-* 在 widgets 文件夹中添加需复用的自定义组件
-* 其中，response.dart 用来放置响应模型类，request.dart 放置请求模型类，api.dart 放置从后端获取信息的方法
+* `pubspec.yaml` 内定义要使用的库和文件
+* `common` 文件夹用于存放常量数据
+* `pages` 文件夹内存放页面文件
+* `assets` 文件夹内存放应用本地资源
+* `network` 文件夹内存放相关的文件
+* `compoment` 文件夹内存放可复用或常用的组件
+* `ext` 文件夹内存放（包，类，函数等的）扩展文件
+* `provider` 文件夹内存放与应用状态相关的文件
+* `service` 文件夹内存放服务类的文件
+* `utils` 文件夹内存放工具类相关的文件
 
 ## 页面样式
 
 * 各个页面的样式应该在整体上保持统一并且美观
-* 不要使用默认样式，也不要使页面与默认样式类似
-* 关于页面的文字，应使用 FastWidget.getText() 来显示文字，便于整个app统一文字字体
+* 不要使用 Material 默认样式，也不要使页面与默认样式类似
+* 关于页面的文字，应使用 FastWidget.text() 来显示文字，便于整个app统一文字字体
 * 关于选色，必须使用 CommonStyles 里的主题色
 * 对于页面的下拉刷新与上拉加载功能，应首选使用 EasyRefresh
 * 对于 EasyRefresh 的 Header 和 Footer ，必须使用 common_list.dart 内的样式
-* 对于一些非 EasyRefresh 的加载动画，优先使用 MyLoading 中的加载动画
+* 对于一些非 EasyRefresh 的加载动画，优先使用 `AppScaffold` 中的加载动画实现，或 `AppLoading` 中的加载动画
 * 如果使用预设的样式后不美观，可以考虑自定义一个
 * 使用 EmptyWidget 来填充列表为空的页面
-* 对于 Appbar 的样式，应该使用 MyAppBar
+* 如非必要，使用 `AppScaffold` 的 AppBar 相关实现来实现页面内的顶部栏
+* 在页面获取必要数据失败时，使用 `AppScaffold` 中的错误信息显示实现来显示错误信息
 
 ## 排版
 
@@ -52,11 +57,11 @@
 
 ### 常用组件
 
-App 内常用或者封装后的组件在 compoment 文件夹里，以下是一些 App 内常用的组件的说明，具体使用方法请参考项目文件或者项目其他文件的使用方式
+App 内常用或者封装后的组件在 `compoment` 文件夹里，以下是一些 App 内常用的组件的说明，具体使用方法请参考项目文件或者项目其他文件的使用方式
 > 如无必要单独编写一个无法复用的组件，请使用项目内封装后的组件来保证项目内代码复用以及可维护性
 
 * 页面骨架 `AppScaffold`  
-  用于创建项目使用的页面骨架，用法与 `Sacffold()` 组件类似，但是支持项目**背景显示**，**加载动画**，以及**错误处理**
+  用于创建项目使用的页面骨架，用法与 `Sacffold()` 组件类似，但是支持**背景显示**，**加载动画**，以及**错误处理**
 * 文字 `AppWidget.text()`  
   用于创建文本 Widget，使用方法与 Text() 组件基本一致，但是需要传入 style 来保证样式统一
 * 输入框 `AppInputWidget()`  
@@ -66,7 +71,7 @@ App 内常用或者封装后的组件在 compoment 文件夹里，以下是一�
 * 行与列空隙 `AppWidget.blankWidth()` 和 `AppWidget.blankHeight()`  
   用于在列表视图中创建空隙，非必要请使用边距来实现
 * 网络图片 `AppWidget.getNetworkImage()`  
-  用于获取网络图片，自带加载动画和 errorBuilder，以及支持直接进入图片画廊
+  用于获取网络图片，自带**加载动画**，**错误处理**，**图片缓存操作**，以及支持直接进入图片画廊
 * 分割线 `AppWidget.buildDivider()`  
   用于创建分割线组件
 * Toast 轻提示 `Util.showToast`  
@@ -187,26 +192,36 @@ AppBorderRadiusValue.borderRadius05
 * `Get.reloadThisPage()` 触发页面完全重载
 * `Get.backToHomeWithTab()` 退出当前导航栈中所有页面并返回首页（的指定页面）
 
+## 数据缓存/持久化
+
+### 一般数据
+项目内使用包 [SharedPreferences](https://pub.dev/packages/shared_preferences) 实现一般数据缓存和持久化操作。  
+
+在 `DataCacheService` 内已封装好大部分常见数据类型的储存函数，并将统一存储键常量配置在 `CacheKeys` 内，具体使用方法请参考文件内的文档。
+
+### 图片
+项目内网络图片组件 `AppWidget.getNetworkImage` 使用包 [CachedNetworkImage](https://pub.dev/packages/cached_network_image) 来进行网络图片展示以及数据缓存操作的实现，并且使用了自定义 `DefaultImageCacheManager` 来覆写原包内相关的图片缓存行为
+
 ## 自适应
 
 ### 通过 ScreenUtil 包进行自适应
 
 [官方文档](https://github.com/OpenFlutter/flutter_screenutil/blob/master/README_CN.md)
-项目通过 ScreenUtil 来保证在各个设备上保持相近的显示效果
+项目通过 ScreenUtil 来保证应用在各个设备上保持相近的显示效果
 来品购 APP 的设计尺寸是 375*800 (单位: dp)，项目已经根据设计尺寸初始化了 ScreenUtil
 
 ```dart
-...
-child: ScreenUtilInit(
-    designSize: const Size(375, 800),
-...
+  ///设计尺寸，配合 ScreenUtil 使用
+  ///
+  ///使用例: `Global.designSize.width.w`
+  static Size designSize = Size(375, 800);
 ```
 
 所以在创建一个屏幕宽度的组件时，例如一个高度为1的黑色长条，需要这么写
 
 ```dart
 Container(
-	width: 375.w,
+	width: 1.sw, //375.w 可以获得同样的效果，但是不利于代码长期维护
 	height: 1,
 	color: Colors.black
 )
@@ -363,11 +378,47 @@ Row(
 
 ## 安全区
 
-get screenPadding => MediaQuery.of(context).padding; //获取屏幕安全区边距
-例如，在挖孔屏设备里获取前置摄像头所占屏幕高度
-get cameraHeight => MediaQuery.of(context).padding.top;
+`get screenPadding => MediaQuery.of(context).padding; //获取屏幕安全区边距`  
+例如，在挖孔屏设备里获取前置摄像头所占屏幕高度  
+`get cameraHeight => MediaQuery.of(context).padding.top;`
 
-或者使用 SafeArea() 组件，使用方式参照 flutter 文档
+或者使用 SafeArea() 组件，使用方式参照 Flutter 官方文档
+
+## 目录
+项目在 `DirectoryPaths` 统一配置目录相关的常量，并使用 `DirectoryUtil` 来统一获取目录对象  
+
+例：
+```dart
+//获取临时文件目录对象
+final tempDir = await DirectoryUtil.getTempDir();
+... 后续使用目录对象进行操作
+
+//获取图片缓存目录对象
+final imageCacheDir = await DirectoryUtil.getImageCacheDir();
+...
+```
+
+## 日志
+使用项目 `util.dart` 内的 `Logger` 来显示信息，而非 `print`
+```dart
+final Logger log = Logger(printer: CustomLogPrinter());
+
+extension LoggerExt on Logger {
+  void err(dynamic e, [StackTrace? trace]) {
+    this.e(e, stackTrace: trace);
+  }
+}
+```
+
+使用例
+```dart
+} on AppNetworkException catch(e) {
+  Util.showToast(e.message);
+  log.err(e); // 使用 Logger 记录日志
+} catch(e, trace) {
+  log.err(e, trace); // 使用 Logger 记录详细日志
+}
+```
 
 # 逻辑
 
