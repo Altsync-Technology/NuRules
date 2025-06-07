@@ -617,4 +617,3 @@ class CartPage extends StatelessWidget
 
 * 如果你在启动项目的时候项目白屏，请首先检查 C 盘有没有剩余 12 个 G，然后再到模拟器内把 app 的应用数据清了，最后再启动项目一次
 
-
