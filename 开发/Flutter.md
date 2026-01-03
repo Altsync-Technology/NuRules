@@ -13,22 +13,46 @@
 
 # 结构与设计
 
-## 语法
+## 规范
 
 * 使用两格缩进
+* 不要省略大括号
+* 使用英文为变量命名
+* 使用卫语句减少代码复杂度
 
 ## 代码结构
-
-* `pubspec.yaml` 内定义要使用的库和文件
-* `common` 文件夹用于存放常量数据
-* `pages` 文件夹内存放页面文件
-* `assets` 文件夹内存放应用本地资源
-* `network` 文件夹内存放相关的文件
-* `compoment` 文件夹内存放可复用或常用的组件
-* `ext` 文件夹内存放（包，类，函数等的）扩展文件
-* `provider` 文件夹内存放与应用状态相关的文件
-* `service` 文件夹内存放服务类的文件
-* `utils` 文件夹内存放工具类相关的文件
+* `/.run` - 存放运行配置相关的文件
+* `/android` - 存放与 Android 平台配置相关文件，以及 `PlatformChannel` 相关的代码
+* `/assets` - 存放应用所需资源文件
+* `/ios` - 存放与 iOS 平台配置相关文件
+* `/lib` - 主要存放 Flutter 项目代码
+  * `/common` 主要用于存放常量数据文件
+  * `/component` 用于存放应用自定义组件文件
+  * `/controller` 用于存放应用控制器相关代码
+  * `/ext` 存放（包，类，函数等的）扩展文件
+  * `/gen` 存放由代码生成工具生成的代码文件
+  * `/pages` 存放页面文件
+  * `/service` 存放应用服务相关文件
+  * `/swagger` 存放由代码生成工具生成的 Api 相关代码文件
+  * `/unclassified` 存放早期项目无法进行分类的代码文件
+  * `/utils` 存放工具类相关的代码文件
+  * `app_bindings.dart` 应用依赖管理相关文件
+  * `controller_bindings.dart` 应用控制器管理相关文件
+  * `service_bindings.dart` 应用服务管理相关文件
+  * `route.dart` 应用路由相关配置文件
+  * `main.dart` 应用主入口文件文件
+* `/linux` - 存放 liunx 平台配置相关文件
+* `/macos` - 存放 macOS 平台 的原生代码目录
+* `/script` - 存放项目开发中所需使用的脚本文件
+* `/tools`-  存放项目开发中所需使用的工具文件
+* `/web` - 存放与 Web 平台配置相关文件
+* `/windows` - 存放与 Windows 平台配置相关文件
+* `analysis_options.yaml` - Dart Linter 配置文件
+* `build.yaml` - Flutter Builder 代码生成的配置文件
+* `devtools_options.yaml` - Dart & Flutter DevTools 的调试配置文件
+* `fgen.yaml` - flutter_asset_generator 的代码生成配置文件
+* `pubspec.yaml` - Flutter 项目核心配置文件
+* `sync.toml` - SimpleSync 工具配置文件
 
 ## 页面样式
 
