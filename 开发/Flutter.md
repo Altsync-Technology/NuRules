@@ -1,9 +1,5 @@
 # Flutter
 
-> 查看此文档前，请先查看 [通用开发指南](../通用开发指南.md)
-
-公司主要使用 Android Studio。
-
 必须使用 fvm 进行 Flutter 版本管理。[简易教程](https://medium.com/@ahmedawwan/flutter-version-management-a-guide-to-using-fvm-dbe1d269f565)
 
 # 氨醛 (安全)
