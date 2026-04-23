@@ -16,7 +16,7 @@
 ### 注释规范
 
 - 勤写短注释
-- 在 for 语句操作列表时，写明这是函数式里的 `Where`（过滤）还是 `Select`（映射/转换）
+- 在 for 语句操作列表时，应当写明这是函数式里的 `Where`（过滤）还是 `Select`（映射/转换）
 
 ```go
 // Where - 过滤出活跃用户
@@ -77,7 +77,7 @@ func badProcess(data []byte) {
 }
 ```
 
-### 结构体与方法
+### 结构体与成员函数（方法）
 
 - 结构体字段首字母大写表示导出
 - 方法接收器使用指针修改状态
@@ -102,12 +102,129 @@ func (u User) IsValid() bool {
 }
 ```
 
+## 命名规范
+
+### 缩写词一致性
+
+缩写词在命名中必须保持全大写或全小写，严禁将其视作普通单词仅首字母大写。
+
+```go
+// 错误
+appId, jsonParser, HttpServer
+
+// 正确
+appID, JSONParser, HTTPServer // 公开
+httpServer // 私有
+```
+
+### 接口命名
+
+接口设计倾向于"小而精"：
+
+- **单函数接口**：以 `er` 结尾。如 `Reader`, `Writer`, `Formatter`, `Scanner`
+- **转换接口**：命名反映目标。如 `Stringer`（转换为字符串）
+- **组合接口**：通过多个接口组合，采用名词描述。如 `ReadCloser`（组合了 `Reader` 和 `Closer`）
+
+### 作用域决定长度
+
+- **短作用域**（循环/分支）：单字母或简写。如 `i`（index）、`r`（reader）、`ctx`（context）
+- **长作用域**（包级变量/全局配置）：必须使用描述性长名称。如 `MaxConnectionRetries` 优于 `Retries`
+
+### 包名规范
+
+包名是变量/函数全路径的一部分，必须简洁且具预测性：
+
+- **名词性质**：单数形式名词（如 `encoding` 而非 `encodings`）
+- **避免冗余**：包名不应与导出的函数名重复
+- **目录依赖**：包名与目录名一致，全小写，不使用下划线或驼峰
+
+```go
+// 错误：冗余
+http.HTTPServer
+
+// 正确
+http.Server
+```
+
+### Error 相关命名
+
+- **自定义错误变量**：以 `Err` 开头。如 `ErrNotFound`, `ErrPermissionDenied`
+- **自定义错误类型**：以 `Error` 结尾。如 `PathError`
+
+### Getter / Setter
+
+Go 不推荐在 Getter 方法名前加 `Get`：
+
+```go
+// 正确
+user.Name()       // Getter
+user.SetName(name string) // Setter
+
+// 错误
+user.GetName()
+```
+
+### 切片/数组命名
+
+使用复数形式，而非 `List` 等后缀：
+
+```go
+users  // 正确
+userList  // 错误
+```
+
+### 布尔值命名
+
+以 `Is`, `Has`, `Can` 或 `Allow` 开头，使其读起来像断言：
+
+```go
+isFound, hasPermission, canRetry, allowOverwrite
+```
+
+### 函数类型后缀
+
+当类型本质是函数签名时，后缀应体现其在程序流中的角色：
+
+| 后缀 | 用途 | 示例 |
+|------|------|------|
+| `-Provider` | 初始化、资源创建、依赖注入 | `StorageProvider`, `TokenProvider` |
+| `-Func` | 最通用的后缀，可直接实现接口 | `ValidatorFunc`, `HandlerFunc` |
+| `-Handler` | 事件驱动或中间件逻辑 | `ErrHandler`, `NotifyHandler` |
+| `-Predicate` | 返回布尔值的逻辑判定 | `MatchPredicate` |
+
+其中 `Provider` 语义最为通用，明确表示"能够提供某实例的东西"。延迟加载场景有时也用 `Generator` 或 `Creator`。
+
+禁止函数类型命名无后缀。
+
+### 结构体后缀
+
+Go 倾向于简洁，不推荐普通结构体加 `Struct`。但以下后缀具有明确指示意义：
+
+| 后缀 | 用途 | 示例 |
+|------|------|------|
+| `-Opt` / `-Options` | 配置参数，配合函数选项模式 | `ServerOptions`, `DialOpt` |
+| `-Spec` | 规格、元数据或未实例化的描述 | `ContainerSpec`, `JobSpec` |
+| `-Metadata` | 非业务核心的辅助信息 | `ObjectMetadata` |
+
+### 匿名函数/Lambda/闭包变量命名
+
+在函数内部定义匿名函数变量时，需打破"名词对名词"的死板命名：
+
+- **构建型**：使用 `make-`, `new-`, `gen-` 前缀。如 `newEvaluator` 而非 `modelEval`
+- **检索型**：使用 `find-`, `pick-`, `resolve-` 前缀。如 `resolveProvider`
+- **后缀区分**：为在视觉上区分值变量与函数变量，可使用 `-Fn` 后缀
+
+最次的情况下也应当使用 -Fn 后缀。注意，**这里说的是变量的命名，而不是类型别名的命名！**
+
+```go
+authFn := func(...) { ... }
+```
+
 ## 语法与逻辑
 
 ### 控制流
 
 - 避免深层嵌套，使用 guard clauses
-- 使用 `for` 循环，没有 `while`
 - 使用 `range` 遍历切片、映射
 
 ```go
@@ -179,27 +296,6 @@ func NewUserService(repo UserRepository, logger Logger) *UserService {
 }
 ```
 
-## 项目结构
-
-### 目录布局
-
-```
-project/
-├── cmd/
-│   └── server/
-│       └── main.go          # 应用入口
-├── internal/
-│   ├── config/              # 配置
-│   ├── model/               # 数据模型
-│   ├── repository/          # 数据访问
-│   ├── service/             #   业务逻辑
-│   └── handler/             # HTTP 处理器
-├── pkg/                    # 公共库
-├── api/                    # API 文档
-├── go.mod
-└── go.sum
-```
-
 ## Web 开发（如果使用）
 
 ### HTTP 框架
@@ -209,7 +305,7 @@ project/
 ### 路由组织
 
 ```go
-// 按 API 版本和资源分组
+// 应当按 API 版本和资源分组
 v1 := router.Group("/api/v1")
 {
     v1.GET("/users", userHandler.List)
@@ -217,27 +313,6 @@ v1 := router.Group("/api/v1")
     v1.POST("/users", userHandler.Create)
     v1.PUT("/users/:id", userHandler.Update)
     v1.DELETE("/users/:id", userHandler.Delete)
-}
-```
-
-### 请求处理
-
-- 使用中间件处理横切关注点
-- 正确设置状态码
-- 统一错误响应格式
-
-```go
-// 中间件
-func AuthMiddleware() gin.HandlerFunc {
-    return func(c *gin.Context) {
-        token := c.GetHeader("Authorization")
-        if !validateToken(token) {
-            c.JSON(401, gin.H{"error": "unauthorized"})
-            c.Abort()
-            return
-        }
-        c.Next()
-    }
 }
 ```
 
